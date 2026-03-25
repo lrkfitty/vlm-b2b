@@ -12,7 +12,7 @@ except Exception:
     pass
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from utils.sheets import add_lead
-from utils.mailer import send_lead_notification, send_booking_notification
+from utils.mailer import send_lead_notification, send_booking_notification, send_booking_confirmation
 from utils.stripe_checkout import handle_stripe_button
 
 ASSETS = Path(__file__).parent / "assets"
@@ -199,6 +199,7 @@ if st.query_params.get("book") == "1" or st.query_params.get("book") == "true":
                     "message":      b_message.strip(),
                 }
                 send_booking_notification(booking)
+                send_booking_confirmation(booking)
                 st.session_state.booking_sent = True
                 st.rerun()
 
